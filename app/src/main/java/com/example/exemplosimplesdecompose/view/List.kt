@@ -48,13 +48,15 @@ fun ListaDePostos(navController: NavHostController, nomeDoPosto: String) {
                 .padding(innerPadding),
             contentPadding = PaddingValues(16.dp)
         ) {
-            items(postos) { item ->
+            items(postosComp) { posto ->
                 Card(
                     onClick = {
-
-                        //Abrir Mapa
-
-
+                        val gmmIntentUri = Uri.parse("geo:${posto.coordenadas.latitude},${posto.coordenadas.longitude}?q=${posto.nome}")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        mapIntent.setPackage("com.google.android.apps.maps") // força abrir no Google Maps, se disponível
+                        if (mapIntent.resolveActivity(context.packageManager) != null) {
+                            context.startActivity(mapIntent)
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -62,7 +64,7 @@ fun ListaDePostos(navController: NavHostController, nomeDoPosto: String) {
                 ) {
                     Box(Modifier.fillMaxSize()) {
                         Text(
-                            text = item,
+                            text = posto.nome,
                             modifier = Modifier.padding(16.dp)
                         )
                     }

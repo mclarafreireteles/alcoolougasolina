@@ -1,5 +1,6 @@
 package com.example.exemplosimplesdecompose.view
 
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,10 +37,11 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun AlcoolGasolinaPreco(navController: NavHostController) {
-    var alcool by remember { mutableStateOf("") }
-    var gasolina by remember { mutableStateOf("") }
-    var nomeDoPosto by remember { mutableStateOf("") }
-    var checkedState by remember { mutableStateOf(true) }
+    var alcool by rememberSaveable { mutableStateOf("") }
+    var gasolina by rememberSaveable { mutableStateOf("") }
+    var nomeDoPosto by rememberSaveable { mutableStateOf("") }
+    var checkedState by rememberSaveable { mutableStateOf(true) }
+
 
     // A surface container using the 'background' color from the theme
     Surface(
