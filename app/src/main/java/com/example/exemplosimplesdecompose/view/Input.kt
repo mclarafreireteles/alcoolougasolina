@@ -1,5 +1,6 @@
 package com.example.exemplosimplesdecompose.view
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,12 +18,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
 @Composable
 fun InputView(navController: NavHostController) { //Recebe o elemento que permite realizar a navegação
+    val context = LocalContext.current
+
+    var nome by remember { mutableStateOf("") }
+    var lat by remember { mutableStateOf("") }
+    var lon by remember { mutableStateOf("") }
+    var precoAlcool by remember { mutableStateOf("") }
+    var precoGasolina by remember { mutableStateOf("") }
     var text by remember { mutableStateOf(TextFieldValue("")) }
     Column(
         modifier = Modifier
@@ -40,7 +49,8 @@ fun InputView(navController: NavHostController) { //Recebe o elemento que permit
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                // Rota?
+                val nomeCodificado = Uri.encode(text.text)
+                navController.navigate("ListaDePostos/$nomeCodificado")
             }
         ) {
             Text("Ir para a próxima tela")

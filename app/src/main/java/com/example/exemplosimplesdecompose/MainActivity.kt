@@ -12,11 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.exemplosimplesdecompose.ui.theme.ExemploSimplesDeComposeTheme
 import com.example.exemplosimplesdecompose.view.AlcoolGasolinaPreco
+import com.example.exemplosimplesdecompose.view.EditarPosto
 import com.example.exemplosimplesdecompose.view.InputView
 import com.example.exemplosimplesdecompose.view.ListaDePostos
 import com.example.exemplosimplesdecompose.view.Welcome
@@ -28,11 +31,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             ExemploSimplesDeComposeTheme {
                 val navController: NavHostController = rememberNavController()
-                NavHost(navController = navController, startDestination = "welcome") {
+                NavHost(navController = navController, startDestination = "mainalcgas") {
                     composable("welcome") { Welcome(navController) }
                     composable("input") { InputView(navController) }
                     composable("mainalcgas") { AlcoolGasolinaPreco(navController) }
-
+                    composable("ListaDePostos/{nomeDoPosto}") { backStackEntry ->
+                        val posto = backStackEntry.arguments?.getString("nomeDoPosto") ?: ""
+                        ListaDePostos(navController, posto)
+                    }
+                    composable(
+                        route = "EditarPosto/{nomePosto}",
+                        arguments = listOf(navArgument("nomePosto") { type = NavType.StringType })
+                    ) {
+                        val nomePosto = it.arguments?.getString("nomePosto")
+                        if (nomePosto != null) {
+                            EditarPosto(navController, nomePosto)
+                        }
+                    }
                 }
             }
         }
