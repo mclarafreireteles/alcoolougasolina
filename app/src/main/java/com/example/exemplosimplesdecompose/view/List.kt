@@ -1,5 +1,6 @@
 package com.example.exemplosimplesdecompose.view
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -36,11 +37,21 @@ import com.example.exemplosimplesdecompose.data.PostoPreferences
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.res.stringResource
+import com.example.exemplosimplesdecompose.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListaDePostos(navController: NavHostController, nomeDoPosto: String) {
     val context= LocalContext.current
+
+    val titulo = stringResource(R.string.lista_de_postos_titulo)
+    val msgWazeNaoInstalado = stringResource(R.string.maps_nao_disponivel)
+    val msgSemLocalizacao = stringResource(R.string.posto_sem_localizacao)
+    val descAbrirNoMaps = stringResource(R.string.abrir_no_maps)
+    val descExcluir = stringResource(R.string.excluir)
+    val descEditar = stringResource(R.string.editar)
+
     var postosSalvos by remember { mutableStateOf(listOf<Posto>()) }
 
     LaunchedEffect(Unit) {
@@ -50,7 +61,7 @@ fun ListaDePostos(navController: NavHostController, nomeDoPosto: String) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Lista de Postos") }
+                title = { titulo }
             )
         }
     ) { innerPadding ->
@@ -99,32 +110,31 @@ fun ListaDePostos(navController: NavHostController, nomeDoPosto: String) {
                             IconButton(onClick = {
                                 val coords = posto.coordenadas
                                 if (coords != null && (coords.latitude != 0.0 || coords.longitude != 0.0)) {
-                                    val gmmIntentUri = Uri.parse("geo:${coords.latitude},${coords.longitude}?q=${Uri.encode(posto.nome)}")
-                                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                                    mapIntent.setPackage("com.google.android.apps.maps")
-                                    if (mapIntent.resolveActivity(context.packageManager) != null) {
-                                        context.startActivity(mapIntent)
-                                    } else {
-                                        Toast.makeText(context, "Google Maps não disponível", Toast.LENGTH_SHORT).show()
+                                    try {
+                                        val wazeUri = Uri.parse("https://waze.com/ul?ll=${coords.latitude},${coords.longitude}&navigate=yes")
+                                        val intent = Intent(Intent.ACTION_VIEW, wazeUri)
+                                        context.startActivity(intent)
+                                    } catch (e: ActivityNotFoundException) {
+                                        Toast.makeText(context, msgWazeNaoInstalado, Toast.LENGTH_SHORT).show()
                                     }
                                 } else {
-                                    Toast.makeText(context, "Posto sem localização definida", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, msgSemLocalizacao, Toast.LENGTH_SHORT).show()
                                 }
                             }) {
-                                Icon(Icons.Default.LocationOn, contentDescription = "Abrir no Maps")
+                                Icon(Icons.Default.LocationOn, contentDescription = descAbrirNoMaps)
                             }
 
                             IconButton(onClick = {
                                 postosSalvos = postosSalvos.toMutableList().also { it.remove(posto) }
                                 PostoPreferences.salvarPostos(context, postosSalvos)
                             }) {
-                                Icon(Icons.Default.Delete, contentDescription = "Excluir")
+                                Icon(Icons.Default.Delete, contentDescription = descExcluir)
                             }
 
                             IconButton(onClick = {
                                 navController.navigate("EditarPosto/${posto.nome}")
                             }) {
-                                Icon(Icons.Default.Edit, contentDescription = "Editar")
+                                Icon(Icons.Default.Edit, contentDescription = descEditar)
                             }
                         }
 

@@ -52,6 +52,8 @@ import androidx.core.content.ContextCompat
 import com.example.exemplosimplesdecompose.data.Coordenadas
 import java.time.format.DateTimeFormatter
 import java.time.LocalDateTime
+import androidx.compose.ui.res.stringResource
+import com.example.exemplosimplesdecompose.R
 
 val CoordenadasSaver: Saver<Coordenadas, List<Double>> = Saver(
     save = { listOf(it.latitude, it.longitude) },
@@ -99,7 +101,7 @@ fun AlcoolGasolinaPreco(navController: NavHostController) {
             OutlinedTextField(
                 value = nomeDoPosto,
                 onValueChange = { nomeDoPosto = it },
-                label = { Text("Nome do Posto (Opcional))") },
+                label = { Text(stringResource(R.string.nome_posto_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
             )
@@ -107,7 +109,7 @@ fun AlcoolGasolinaPreco(navController: NavHostController) {
             OutlinedTextField(
                 value = alcool,
                 onValueChange = { alcool = it }, // Atualiza o estado
-                label = { Text("Preço do Álcool (R$)") },
+                label = { Text(stringResource(R.string.preco_alcool_label)) },
                 modifier = Modifier.fillMaxWidth(), // Preenche a largura disponível
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number) // Configuração do teclado
             )
@@ -115,7 +117,7 @@ fun AlcoolGasolinaPreco(navController: NavHostController) {
             OutlinedTextField(
                 value = gasolina,
                 onValueChange = { gasolina = it },
-                label = { Text("Preço da Gasolina (R$)") },
+                label = { Text(stringResource(R.string.preco_gasolina_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -160,16 +162,16 @@ fun AlcoolGasolinaPreco(navController: NavHostController) {
                     checkedState = compensa
 
                     resultado = if (compensa) {
-                        "Abasteça com Álcool (Álcool está abaixo de 75% do preço da Gasolina)"
+                        context.getString(R.string.resultado_alcool)
                     } else {
-                        "Abasteça com Gasolina (Álcool não compensa)"
+                        context.getString(R.string.resultado_gasolina)
                     }
 
                     obterLocalizacao(context) { latitude, longitude ->
                         coordenadas = Coordenadas(latitude, longitude)
 
                         val posto = Posto(
-                            nome = if (nomeDoPosto.isNotBlank()) nomeDoPosto else "Posto sem nome",
+                            nome = if (nomeDoPosto.isNotBlank()) nomeDoPosto else context.getString(R.string.posto_sem_nome),
                             precoAlcool = precoAlcoolDouble,
                             precoGasolina = precoGasolinaDouble,
                             coordenadas = Coordenadas(latitude, longitude),
@@ -181,7 +183,7 @@ fun AlcoolGasolinaPreco(navController: NavHostController) {
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Calcular")
+                Text(stringResource(R.string.calcular))
             }
 
             // Texto do resultado

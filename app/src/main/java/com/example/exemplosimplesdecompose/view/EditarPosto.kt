@@ -18,6 +18,8 @@ import java.util.*
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.ui.res.stringResource
+import com.example.exemplosimplesdecompose.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,6 +28,7 @@ fun EditarPosto(
     navController: NavHostController,
     nomeDoPosto: String
 ) {
+    val msgPostoAtualizado = stringResource(R.string.posto_atualizado_sucesso)
     val context = LocalContext.current
 
     // Recupera a lista atual de postos
@@ -41,10 +44,10 @@ fun EditarPosto(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Editar Posto") },
+                title = { Text(stringResource(R.string.editar_posto_titulo)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.voltar))
                     }
                 }
             )
@@ -62,7 +65,7 @@ fun EditarPosto(
             OutlinedTextField(
                 value = nome,
                 onValueChange = { nome = it },
-                label = { Text("Nome do Posto") },
+                label = { Text(stringResource(R.string.nome_posto_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -70,7 +73,7 @@ fun EditarPosto(
             OutlinedTextField(
                 value = precoAlcool,
                 onValueChange = { precoAlcool = it },
-                label = { Text("Preço Álcool") },
+                label = { Text(stringResource(R.string.preco_alcool_label)) },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -79,7 +82,7 @@ fun EditarPosto(
             OutlinedTextField(
                 value = precoGasolina,
                 onValueChange = { precoGasolina = it },
-                label = { Text("Preço Gasolina") },
+                label = { Text(stringResource(R.string.preco_gasolina_label))  },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
@@ -116,7 +119,7 @@ fun EditarPosto(
                                 list[index] = it
                             }
                             PostoPreferences.salvarPostos(context, postos)
-                            Toast.makeText(context, "Posto atualizado com sucesso!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, msgPostoAtualizado, Toast.LENGTH_SHORT).show()
                             navController.popBackStack()
                         }
                     } else {
@@ -124,7 +127,7 @@ fun EditarPosto(
                     }
                 }
             ) {
-                Text("Salvar")
+                Text(stringResource(R.string.botao_salvar))
             }
         }
     }

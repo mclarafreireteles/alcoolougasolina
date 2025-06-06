@@ -1,3 +1,32 @@
 <resources>
-    <string name="app_name">ExemploSimplesDeCompose</string>
+    <string name="app_name">Alcool ou Gasolina</string>
+    <string name="nome_posto_label">Nome do Posto (Opcional)</string>
+    <string name="preco_alcool_label">Preço do Álcool (R$)</string>
+    <string name="preco_gasolina_label">Preço da Gasolina (R$)</string>
+    <string name="calcular">Calcular</string>
+    <string name="resultado_alcool">Abasteça com Álcool (Álcool está abaixo de 75%% do preço da Gasolina)</string>
+    <string name="resultado_gasolina">Abasteça com Gasolina (Álcool não compensa)</string>
+    <string name="inserir_posto">Inserir Posto</string>
+    <string name="posto_sem_nome">Posto sem nome</string>
+    <string name="posto_nao_encontrado">Posto não encontrado</string>
+    <string name="preco_alcool">Preço Álcool</string>
+    <string name="preco_gasolina">Preço Gasolina</string>
+    <string name="data_cadastro">Data de Cadastro</string>
+    <string name="nao_informado">Não informado</string>
+    <string name="coordenadas">Coordenadas</string>
+    <string name="coordenadas_nao_disponiveis">Não disponíveis</string>
+    <string name="botao_voltar">Voltar</string>
+    <string name="editar_posto_titulo">Editar Posto</string>
+    <string name="voltar">Voltar</string>
+    <string name="nome_vazio_erro">Nome não pode ser vazio</string>
+    <string name="preco_invalido_erro">Preços devem ser números válidos</string>
+    <string name="posto_atualizado_sucesso">Posto atualizado com sucesso!</string>
+    <string name="posto_atualizar_erro">Erro ao encontrar o posto para atualizar</string>
+    <string name="botao_salvar">Salvar</string>
+    <string name="lista_de_postos_titulo">Lista de Postos</string>
+    <string name="maps_nao_disponivel">Waze não está instalado</string>
+    <string name="posto_sem_localizacao">Posto sem localização definida</string>
+    <string name="abrir_no_maps">Abrir no Maps</string>
+    <string name="excluir">Excluir</string>
+    <string name="editar">Editar</string>
 </resources>

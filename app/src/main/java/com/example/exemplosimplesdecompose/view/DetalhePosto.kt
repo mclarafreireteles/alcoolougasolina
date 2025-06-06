@@ -14,11 +14,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.exemplosimplesdecompose.data.PostoPreferences
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.exemplosimplesdecompose.R
 
 @Composable
 fun DetalhePostoScreen(navController: NavHostController, nomeDoPosto: String) {
@@ -29,7 +31,7 @@ fun DetalhePostoScreen(navController: NavHostController, nomeDoPosto: String) {
 
     if (posto == null) {
         Text(
-            "Posto não encontrado",
+            text = stringResource(R.string.posto_nao_encontrado),
             style = MaterialTheme.typography.titleLarge.copy(fontSize = 22.sp),
             modifier = Modifier
                 .padding(16.dp)
@@ -50,17 +52,14 @@ fun DetalhePostoScreen(navController: NavHostController, nomeDoPosto: String) {
             style = MaterialTheme.typography.headlineMedium.copy(fontSize = 28.sp, fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(bottom = 12.dp)
         )
-
-        InfoItem(label = "Preço Álcool", value = "R$ ${posto.precoAlcool}")
-        InfoItem(label = "Preço Gasolina", value = "R$ ${posto.precoGasolina}")
-        InfoItem(label = "Data de Cadastro", value = posto.dataCadastro ?: "Não informado")
-
         val coord = posto.coordenadas
-        if (coord != null) {
-            InfoItem(label = "Coordenadas", value = "${coord.latitude}, ${coord.longitude}")
-        } else {
-            InfoItem(label = "Coordenadas", value = "Não disponíveis")
-        }
+
+
+        InfoItem(label = stringResource(R.string.preco_alcool), value = "R$ ${posto.precoAlcool}")
+        InfoItem(label = stringResource(R.string.preco_gasolina), value = "R$ ${posto.precoGasolina}")
+        InfoItem(label = stringResource(R.string.data_cadastro), value = posto.dataCadastro ?: stringResource(R.string.nao_informado))
+        InfoItem(label = stringResource(R.string.coordenadas), value = if (coord != null) "${coord.latitude}, ${coord.longitude}" else stringResource(R.string.coordenadas_nao_disponiveis))
+
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -68,7 +67,7 @@ fun DetalhePostoScreen(navController: NavHostController, nomeDoPosto: String) {
             onClick = { navController.popBackStack() },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {
-            Text(text = "Voltar", fontSize = 18.sp)
+            Text(text = stringResource(R.string.botao_voltar), fontSize = 18.sp)
         }
     }
 }

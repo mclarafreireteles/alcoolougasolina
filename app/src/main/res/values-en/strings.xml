@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Alcohol or Gas</string>
+    <string name="nome_posto_label">Gas Station Name (Optional)</string>
+    <string name="preco_alcool_label">Alcohol Price (R$)</string>
+    <string name="preco_gasolina_label">Gasoline Price (R$)</string>
+    <string name="calcular">Calculate</string>
+    <string name="resultado_alcool">Refuel with Alcohol (Alcohol price is below 75%% of Gasoline price)</string>
+    <string name="resultado_gasolina">Refuel with Gasoline (Alcohol is not worth it)</string>
+    <string name="inserir_posto">Insert Gas Station</string>
+    <string name="posto_sem_nome">Unnamed Gas Station</string>
+    <string name="posto_nao_encontrado">Gas Station not found</string>
+    <string name="preco_alcool">Alcohol Price</string>
+    <string name="preco_gasolina">Gasoline Price</string>
+    <string name="data_cadastro">Registration Date</string>
+    <string name="nao_informado">Not informed</string>
+    <string name="coordenadas">Coordinates</string>
+    <string name="coordenadas_nao_disponiveis">Not available</string>
+    <string name="botao_voltar">Back</string>
+    <string name="editar_posto_titulo">Edit Gas Station</string>
+    <string name="voltar">Back</string>
+    <string name="nome_vazio_erro">Name cannot be empty</string>
+    <string name="preco_invalido_erro">Prices must be valid numbers</string>
+    <string name="posto_atualizado_sucesso">Gas Station updated successfully!</string>
+    <string name="posto_atualizar_erro">Error finding gas station to update</string>
+    <string name="botao_salvar">Save</string>
+    <string name="lista_de_postos_titulo">Gas Stations List</string>
+    <string name="maps_nao_disponivel">Waze is not installed</string>
+    <string name="posto_sem_localizacao">Gas Station location not defined</string>
+    <string name="abrir_no_maps">Open in Maps</string>
+    <string name="excluir">Delete</string>
+    <string name="editar">Edit</string>
+</resources>
