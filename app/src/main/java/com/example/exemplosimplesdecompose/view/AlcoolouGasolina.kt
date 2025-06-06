@@ -50,6 +50,8 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.core.content.ContextCompat
 import com.example.exemplosimplesdecompose.data.Coordenadas
+import java.time.format.DateTimeFormatter
+import java.time.LocalDateTime
 
 val CoordenadasSaver: Saver<Coordenadas, List<Double>> = Saver(
     save = { listOf(it.latitude, it.longitude) },
@@ -170,7 +172,9 @@ fun AlcoolGasolinaPreco(navController: NavHostController) {
                             nome = if (nomeDoPosto.isNotBlank()) nomeDoPosto else "Posto sem nome",
                             precoAlcool = precoAlcoolDouble,
                             precoGasolina = precoGasolinaDouble,
-                            coordenadas = Coordenadas(latitude, longitude)
+                            coordenadas = Coordenadas(latitude, longitude),
+                            dataCadastro = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+
                         )
                         PostoPreferences.salvarPosto(context, posto)
                     }

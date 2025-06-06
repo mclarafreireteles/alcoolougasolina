@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -62,19 +63,20 @@ fun ListaDePostos(navController: NavHostController, nomeDoPosto: String) {
             items(postosSalvos) { posto ->
                 Card(
                     onClick = {
-                        val coords = posto.coordenadas
-                        if (coords != null && (coords.latitude != 0.0 || coords.longitude != 0.0)) {
-                            val gmmIntentUri = Uri.parse("geo:${coords.latitude},${coords.longitude}?q=${Uri.encode(posto.nome)}")
-                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
-                            mapIntent.setPackage("com.google.android.apps.maps")
-                            if (mapIntent.resolveActivity(context.packageManager) != null) {
-                                context.startActivity(mapIntent)
-                            } else {
-                                Toast.makeText(context, "Google Maps não disponível", Toast.LENGTH_SHORT).show()
-                            }
-                        } else {
-                            Toast.makeText(context, "Posto sem localização definida", Toast.LENGTH_SHORT).show()
-                        }
+                        navController.navigate("DetalhePosto/${Uri.encode(posto.nome)}")
+//                        val coords = posto.coordenadas
+//                        if (coords != null && (coords.latitude != 0.0 || coords.longitude != 0.0)) {
+//                            val gmmIntentUri = Uri.parse("geo:${coords.latitude},${coords.longitude}?q=${Uri.encode(posto.nome)}")
+//                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+//                            mapIntent.setPackage("com.google.android.apps.maps")
+//                            if (mapIntent.resolveActivity(context.packageManager) != null) {
+//                                context.startActivity(mapIntent)
+//                            } else {
+//                                Toast.makeText(context, "Google Maps não disponível", Toast.LENGTH_SHORT).show()
+//                            }
+//                        } else {
+//                            Toast.makeText(context, "Posto sem localização definida", Toast.LENGTH_SHORT).show()
+//                        }
 
                     },
                     modifier = Modifier
@@ -92,6 +94,25 @@ fun ListaDePostos(navController: NavHostController, nomeDoPosto: String) {
                                 text = posto.nome,
                                 modifier = Modifier.padding(16.dp)
                             )
+
+                            // Botão abrir Google Maps
+                            IconButton(onClick = {
+                                val coords = posto.coordenadas
+                                if (coords != null && (coords.latitude != 0.0 || coords.longitude != 0.0)) {
+                                    val gmmIntentUri = Uri.parse("geo:${coords.latitude},${coords.longitude}?q=${Uri.encode(posto.nome)}")
+                                    val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                                    mapIntent.setPackage("com.google.android.apps.maps")
+                                    if (mapIntent.resolveActivity(context.packageManager) != null) {
+                                        context.startActivity(mapIntent)
+                                    } else {
+                                        Toast.makeText(context, "Google Maps não disponível", Toast.LENGTH_SHORT).show()
+                                    }
+                                } else {
+                                    Toast.makeText(context, "Posto sem localização definida", Toast.LENGTH_SHORT).show()
+                                }
+                            }) {
+                                Icon(Icons.Default.LocationOn, contentDescription = "Abrir no Maps")
+                            }
 
                             IconButton(onClick = {
                                 postosSalvos = postosSalvos.toMutableList().also { it.remove(posto) }

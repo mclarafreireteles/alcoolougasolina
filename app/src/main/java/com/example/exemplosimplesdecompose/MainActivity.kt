@@ -19,6 +19,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.exemplosimplesdecompose.ui.theme.ExemploSimplesDeComposeTheme
 import com.example.exemplosimplesdecompose.view.AlcoolGasolinaPreco
+import com.example.exemplosimplesdecompose.view.DetalhePostoScreen
 import com.example.exemplosimplesdecompose.view.EditarPosto
 import com.example.exemplosimplesdecompose.view.InputView
 import com.example.exemplosimplesdecompose.view.ListaDePostos
@@ -47,6 +48,13 @@ class MainActivity : ComponentActivity() {
                         if (nomePosto != null) {
                             EditarPosto(navController, nomePosto)
                         }
+                    }
+                    composable(
+                        route = "DetalhePosto/{nomeDoPosto}",
+                        arguments = listOf(navArgument("nomeDoPosto") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        val nomeDoPosto = backStackEntry.arguments?.getString("nomeDoPosto") ?: ""
+                        DetalhePostoScreen(navController, nomeDoPosto)
                     }
                 }
             }
